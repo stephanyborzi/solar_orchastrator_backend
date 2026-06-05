@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class SolarEvent {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "solar_events_seq")
     @SequenceGenerator(name = "solar_events_seq", sequenceName = "sq_solar_events", allocationSize = 1)

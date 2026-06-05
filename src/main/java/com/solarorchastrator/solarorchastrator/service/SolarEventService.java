@@ -29,8 +29,6 @@ public class SolarEventService {
         solarEvent.setSolarGenerationPredictedMw(BigDecimal.valueOf(dto.getSolarGenerationPredictedMw()));
         solarEvent.setCreatedAt(dto.getTimestamp() != null ? dto.getTimestamp() : LocalDateTime.now());
 
-        // REGRA 1: DETECÇÃO DE TEMPESTADE (K-Index >= 6)
-
         if (solarEvent.getKIndex().compareTo(BigDecimal.valueOf(6)) >= 0) {
             solarEvent.setActionRequired(true);
             solarEvent.setEvent_type("SOLAR_STORM");
@@ -39,15 +37,11 @@ public class SolarEventService {
             solarEvent.setEvent_type("NORMAL");
         }
 
-        // REGRA 2: RECOMENDAÇÃO DE BATERIA (Baseado no limite correto, ex: > 20°C)
-
         if (solarEvent.getPredictedTempRiseCelsius().compareTo(BigDecimal.valueOf(20)) > 0) {
             solarEvent.setBatteryChargeRecommendation(true);
         } else {
             solarEvent.setBatteryChargeRecommendation(false);
         }
-
-        // REGRA 3: TEXTO CUSTOMIZADO DINÂMICO
 
         if (dto.getRecommendation() == null || dto.getRecommendation().isBlank()) {
             if (solarEvent.getActionRequired()) {
@@ -58,8 +52,6 @@ public class SolarEventService {
         } else {
             solarEvent.setRecommendation(dto.getRecommendation());
         }
-
-        // REGRA 4: CÁLCULO DE ECONOMIA ESTIMADA (MW * 10000)
 
         if (dto.getEstimatedSavingsBrl() == null) {
             BigDecimal calculatedSavings = solarEvent.getSolarGenerationPredictedMw().multiply(BigDecimal.valueOf(10000.0));
@@ -73,9 +65,5 @@ public class SolarEventService {
 
     public SolarEvent getLatestDashboardData() {
         return solarEventRepository.findFirstByOrderByIdDesc();
-    }
-
-    private void executeAutomateMigration(int totalSatellites){
-        System.out.println("Executing automate migration...");
     }
 }
