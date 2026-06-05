@@ -22,19 +22,19 @@ public class SolarEventController {
 
     @PostMapping("/solar-events")
     public ResponseEntity<SolarEvent> receiveSolarEvent(@RequestBody SolarEventDTO solarEventDTO) {
-        SolarEvent savedEvent = solarEventService.processAndSaveEvent(solarEventDTO);
+        SolarEvent savedEvent = solarEventService.createSolarEvent(solarEventDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedEvent);
     }
 
-    @GetMapping("/dashboard")
-    public ResponseEntity<SolarEvent> getDashboard() {
-        try {
-            SolarEvent latestEvent = solarEventService.getLatestDashboardData();
-            return ResponseEntity.ok(latestEvent);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+//    @GetMapping("/dashboard")
+//    public ResponseEntity<SolarEvent> getDashboard() {
+//        try {
+//            SolarEvent latestEvent = solarEventService.getLatestDashboardData();
+//            return ResponseEntity.ok(latestEvent);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//    }
 
 }

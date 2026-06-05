@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class SolarEventService {
@@ -19,7 +18,7 @@ public class SolarEventService {
     }
 
     @Transactional
-    public SolarEvent processAndSaveEvent(SolarEventDTO dto) {
+    public SolarEvent createSolarEvent(SolarEventDTO dto) {
         SolarEvent solarEvent = new SolarEvent();
 
         solarEvent.setKIndex(dto.getKIndex());
@@ -63,7 +62,7 @@ public class SolarEventService {
         return solarEventRepository.save(solarEvent);
     }
 
-    public SolarEvent getLatestDashboardData() {
-        return solarEventRepository.findFirstByOrderByIdDesc();
-    }
+//    public SolarEvent getLatestDashboardData() {
+//        return solarEventRepository.findFirstByOrderByIdDesc();
+//    }
 }
